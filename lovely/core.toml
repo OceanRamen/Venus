@@ -1,0 +1,49 @@
+[manifest]
+version = "1.0.0"
+dump_lua = true
+priority = 0
+
+[[patches]]
+[patches.module]
+source = "dkjson.lua"
+before = "main.lua"
+name = "dkjson"
+
+[[patches]]
+[patches.copy]
+target = "main.lua"
+position = "append"
+sources = ["core/core.lua"]
+
+[[patches]]
+[patches.pattern]
+target = "game.lua"
+pattern = "self:load_profile(G.SETTINGS.profile or 1)"
+position = "after"
+payload = "V:start_up()"
+match_indent = true
+overwrite = false
+
+[[patches]]
+[patches.pattern]
+target = "game.lua"
+pattern = 'for _, v in ipairs(self.FONTS) do'
+position = "before"
+payload = 'self.LANGUAGES = V:add_languages(self.LANGUAGES)'
+match_indent = true
+overwrite = false
+
+[[patches]]
+[patches.pattern]
+target = "game.lua"
+pattern = "self.LANG = self.LANGUAGES[self.SETTINGS.language] or self.LANGUAGES['en-us']"
+position = "after"
+payload = '''
+if V.LANGUAGES[self.SETTINGS.language] then
+  self.localization = V.LOC_DATA[self.LANG.key]
+  init_localization()
+  return
+end
+'''
+match_indent = true
+overwrite = false
