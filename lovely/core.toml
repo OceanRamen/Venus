@@ -47,3 +47,14 @@ end
 '''
 match_indent = true
 overwrite = false
+
+[[patches]]
+[patches.pattern]
+target = "game.lua"
+pattern = "if not (love.filesystem.read('localization/'..G.SETTINGS.language..'.lua')) or G.F_ENGLISH_ONLY then"
+position = "at"
+payload = '''
+if not (V.LANGUAGES[G.SETTINGS.language]) or (love.filesystem.read("localization/" .. G.SETTINGS.language .. ".lua")) or G.F_ENGLISH_ONLY then
+'''
+match_indent = true
+overwrite = false

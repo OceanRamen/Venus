@@ -9,6 +9,9 @@ function Venus:set_globals()
 
   self.LANGUAGES = {}
   self.LOC_DATA = {}
+  self.MUSIC_PACKS = {}
+  self.USE_PACK = true
+  self.CURR_PACK = "teetow_balatro_and_chill"
 end
 
 V = Venus()
